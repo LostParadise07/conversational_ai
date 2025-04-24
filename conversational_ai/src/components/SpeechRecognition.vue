@@ -33,10 +33,9 @@
           <h3>Current Transcript:</h3>
           <p>{{ result }}</p>
         </div>
-        
         <div class="transcript">
           <h3>Full Transcript:</h3>
-          <p>{{ fullTranscript }}</p>
+          <p v-html="fullTranscript"></p>
         </div>
         
         <div v-if="error" class="error">
@@ -52,6 +51,7 @@
   
   <script>
   import { useSpeechRecognition } from '@vueuse/core'
+  import { getChatGPTResponse } from '../chat/chat';
   import { ref, watch } from 'vue'
   
   export default {
@@ -85,10 +85,33 @@
         start()
       }
   
-      const stopRecognition = () => {
+      const stopRecognition = async () => {
         stop()
+        console.log(fullTranscript.value)
+        const response = await getChatGPTResponse(fullTranscript.value)
+        fullTranscript.value = formatTranscript(response)
+        console.log('Updated Full Transcript:', fullTranscript.value)
       }
   
+      function formatTranscript(rawText) {
+        const paragraphs = rawText
+          .split(/\n|\r|\r\n/) 
+          .map(line => line.trim())
+          .filter(line => line.length > 0);
+
+        return paragraphs
+          .map((para, index) => {
+            if (/^\d+\.\s/.test(para)) {
+              return `<li>${para.replace(/^(\d+\.)/, '<strong>$1</strong>')}</li>`;
+            }
+            if (/^[A-Z][^:]{3,40}:$/.test(para)) {
+              return `<h4>${para}</h4>`;
+            }
+            return `<p>${para}</p>`;
+          })
+          .join('');
+      }
+
       return {
         isSupported,
         isListening,

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Speech Recognition</h1>
+    <h1>Conversation</h1>
     <SpeechRecognition />
   </div>
 </template>
@@ -14,8 +14,6 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
 }
 </style>
