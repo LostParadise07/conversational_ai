@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+
 
 export async function getChatGPTResponse(prompt: string): Promise<string> {
     try {

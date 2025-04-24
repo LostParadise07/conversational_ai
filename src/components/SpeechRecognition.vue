@@ -87,10 +87,8 @@
   
       const stopRecognition = async () => {
         stop()
-        console.log(fullTranscript.value)
         const response = await getChatGPTResponse(fullTranscript.value)
         fullTranscript.value = formatTranscript(response)
-        console.log('Updated Full Transcript:', fullTranscript.value)
       }
   
       function formatTranscript(rawText) {
