@@ -5,7 +5,7 @@ const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 export async function getChatGPTResponse(prompt: string): Promise<string> {
     try {
-        const precisePrompt = `You're in a technical interview, use simple english. Provide a concise and precise explanation or solution. In case you have coding question start from bruteforce and then provide optimised. Only include code if explicitly asked. Focus on reasoning and clarity: ${prompt}`;
+        const precisePrompt = `You're in a technical interview, use simple english. Provide a concise and precise explanation. Only include code if explicitly asked. Focus on reasoning and clarity: ${prompt}`;
         const response = await axios.post(
           'https://openrouter.ai/api/v1/chat/completions',
           {
